@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,11 +23,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -179,7 +182,7 @@ fun LoginBody(innerPadding: PaddingValues) {
             Button(
                 onClick = {
                     // user le button thiche pachi ke garne
-//                to-do when clicked
+                    //                to-do when clicked
                 },
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -188,6 +191,49 @@ fun LoginBody(innerPadding: PaddingValues) {
                 )
             ) {
                 Text("Follow")
+            }
+
+            OutlinedButton(
+                onClick = {
+                    // user le button thiche pachi ke garne
+//                to-do when clicked
+                },
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = Color.Black
+                )
+            ) {
+                Text("Message")
+            }
+
+            OutlinedButton(
+                onClick = {
+                    // user le button thiche pachi ke garne
+//                to-do when clicked
+                },
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = Color.Black
+                )
+            ) {
+                Text("Email")
+            }
+
+            OutlinedButton(
+                onClick = {
+                    // user le button thiche pachi ke garne
+//                to-do when clicked
+                },
+                shape = RoundedCornerShape(10.dp),
+//                border = BorderStroke(1.dp,Color.Red),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = Color.Black
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = null
+                )
             }
         }
 
