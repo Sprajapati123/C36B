@@ -38,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -152,9 +153,24 @@ fun LoginBody(innerPadding: PaddingValues) {
             }
         }
 
-        Spacer(modifier = Modifier.padding(20.dp))
-
-
+        Column(
+            modifier =
+            Modifier.padding(
+                horizontal = 10.dp,
+                vertical = 15.dp
+            )
+        ) {
+            Text("Andrew Queo", style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                color = Color.Red,
+                fontSize = 19.sp
+            )
+            )
+            Text("Artist", modifier = Modifier.alpha(0.5f))
+            Text("DESIGNER")
+            Text("isabella@art.design")
+            Text("Followed by jeena and anna")
+        }
 
 
     }
