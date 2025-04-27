@@ -160,16 +160,35 @@ fun LoginBody(innerPadding: PaddingValues) {
                 vertical = 15.dp
             )
         ) {
-            Text("Andrew Queo", style = TextStyle(
-                fontWeight = FontWeight.Bold,
-                color = Color.Red,
-                fontSize = 19.sp
-            )
+            Text(
+                "Andrew Queo", style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Red,
+                    fontSize = 19.sp
+                )
             )
             Text("Artist", modifier = Modifier.alpha(0.5f))
             Text("DESIGNER")
             Text("isabella@art.design")
             Text("Followed by jeena and anna")
+
+
+        }
+
+        Row {
+            Button(
+                onClick = {
+                    // user le button thiche pachi ke garne
+//                to-do when clicked
+                },
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Blue,
+                    contentColor = Color.White
+                )
+            ) {
+                Text("Follow")
+            }
         }
 
 
