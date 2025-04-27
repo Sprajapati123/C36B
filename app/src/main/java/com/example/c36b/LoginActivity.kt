@@ -28,6 +28,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -56,6 +58,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.c36b.ui.theme.C36BTheme
+import com.example.c36b.ui.theme.Green40
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -238,6 +241,24 @@ fun LoginBody(innerPadding: PaddingValues) {
                     imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null
                 )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(50.dp))
+        Row {
+            Card(
+                modifier = Modifier.height(300.dp).weight(1f)
+            ) {
+
+            }
+            Spacer(modifier = Modifier.width(50.dp))
+            Card(
+                modifier = Modifier.height(300.dp).weight(3f),
+                colors = CardDefaults.cardColors(
+                    containerColor = Green40
+                )
+            ) {
+
             }
         }
 
