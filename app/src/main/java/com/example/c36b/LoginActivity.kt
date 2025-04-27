@@ -178,7 +178,11 @@ fun LoginBody(innerPadding: PaddingValues) {
 
         }
 
-        Row {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
             Button(
                 onClick = {
                     // user le button thiche pachi ke garne
