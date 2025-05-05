@@ -134,26 +134,28 @@ fun LoginBody(innerPadding: PaddingValues) {
                 Icon(
                     imageVector = Icons.Default.Lock,
                     contentDescription = null,
-                    modifier = Modifier.clickable {
-                        passwordVisibility = !passwordVisibility
-                    }
+
                 )
             },
             suffix = {
                 Icon(
                     painter = painterResource(
-                        R.drawable.baseline_visibility_24
+                        if(passwordVisibility)
+                        R.drawable.baseline_visibility_24 else R.drawable.baseline_visibility_off_24
                     ),
-                    contentDescription = null
+                    contentDescription = null,
+                    modifier = Modifier.clickable {
+                        passwordVisibility = !passwordVisibility
+                    }
                 )
             },
 
             placeholder = {
                 Text("*******")
             },
-            value = username,
+            value = password,
             onValueChange = { input ->
-                username = input
+                password = input
             }
         )
 
