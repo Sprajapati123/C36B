@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,9 +43,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.c36b.ui.theme.C36BTheme
@@ -135,13 +139,14 @@ fun LoginBody(innerPadding: PaddingValues) {
                     imageVector = Icons.Default.Lock,
                     contentDescription = null,
 
-                )
+                    )
             },
             suffix = {
                 Icon(
                     painter = painterResource(
-                        if(passwordVisibility)
-                        R.drawable.baseline_visibility_24 else R.drawable.baseline_visibility_off_24
+                        if (passwordVisibility)
+                            R.drawable.baseline_visibility_24
+                        else R.drawable.baseline_visibility_off_24
                     ),
                     contentDescription = null,
                     modifier = Modifier.clickable {
@@ -162,7 +167,9 @@ fun LoginBody(innerPadding: PaddingValues) {
 
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -187,6 +194,32 @@ fun LoginBody(innerPadding: PaddingValues) {
 
             Text("Forget Password")
         }
+
+        Button(
+            onClick = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.LightGray,
+                contentColor = Color.Black
+            )
+        ) {
+            Text("Login")
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            "Don't have an account, Sign Up?",
+            style = TextStyle(
+                textAlign = TextAlign.End,
+                fontStyle = FontStyle.Italic
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
+
+            )
 
     }
 }
