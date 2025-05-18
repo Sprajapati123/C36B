@@ -260,6 +260,14 @@ fun LoginBody(
 //                    }
 
 
+                    val intent = Intent(context, DashboardActitivity::class.java)
+
+                    intent.putExtra("email",username)
+                    intent.putExtra("password",password)
+
+                    context.startActivity(intent)
+
+                    activity.finish()
 
                 },
                 modifier = Modifier

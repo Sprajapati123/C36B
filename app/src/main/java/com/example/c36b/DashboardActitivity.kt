@@ -1,5 +1,6 @@
 package com.example.c36b
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.c36b.ui.theme.C36BTheme
 
@@ -26,11 +28,17 @@ class DashboardActitivity : ComponentActivity() {
 
 @Composable
 fun DashboardBody(){
+    val context = LocalContext.current
+    val activity = context as Activity
+
+    val email : String? = activity.intent.getStringExtra("email")
+    val password : String? = activity.intent.getStringExtra("password")
+
     Scaffold { innerPadding->
         Column (
             modifier = Modifier.padding(innerPadding).fillMaxSize()
         ){
-            Text("Good Morning, User")
+            Text("Good Morning, $email")
         }
     }
 }
