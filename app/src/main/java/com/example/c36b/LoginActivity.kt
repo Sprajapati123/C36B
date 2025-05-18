@@ -1,12 +1,17 @@
 package com.example.c36b
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,6 +28,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -31,6 +37,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -38,10 +46,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -52,22 +63,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.c36b.ui.theme.C36BTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Scaffold { innerPadding ->
-                LoginBody(innerPadding)
-            }
+            LoginBody()
         }
+
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginBody(innerPadding: PaddingValues) {
+fun LoginBody(
+) {
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -80,147 +92,199 @@ fun LoginBody(innerPadding: PaddingValues) {
         mutableStateOf(false)
     }
 
-    Column(
-        modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize()
-            .background(color = Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    var context = LocalContext.current
+    val activity = context as Activity
 
-        Spacer(modifier = Modifier.height(50.dp))
 
-        Image(
-            painter = painterResource(R.drawable.img),
-            contentDescription = null,
+
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { padding ->
+        Column(
             modifier = Modifier
-                .height(250.dp)
-                .width(250.dp)
-        )
-
-        Spacer(modifier = Modifier.height(50.dp))
-
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
-            shape = RoundedCornerShape(12.dp),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email
-            ),
-            prefix = {
-                Icon(Icons.Default.Email, contentDescription = null)
-            },
-
-            placeholder = {
-                Text("abc@gmail.com")
-            },
-            value = username,
-            onValueChange = { input ->
-                username = input
-            }
-        )
-
-
-        Spacer(modifier = Modifier.height(20.dp))
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
-            shape = RoundedCornerShape(12.dp),
-            visualTransformation =
-            if (passwordVisibility) PasswordVisualTransformation()
-            else VisualTransformation.None,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password
-            ),
-            prefix = {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = null,
-
-                    )
-            },
-            suffix = {
-                Icon(
-                    painter = painterResource(
-                        if (passwordVisibility)
-                            R.drawable.baseline_visibility_24
-                        else R.drawable.baseline_visibility_off_24
-                    ),
-                    contentDescription = null,
-                    modifier = Modifier.clickable {
-                        passwordVisibility = !passwordVisibility
-                    }
-                )
-            },
-
-            placeholder = {
-                Text("*******")
-            },
-            value = password,
-            onValueChange = { input ->
-                password = input
-            }
-        )
-
-
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .padding(padding)
+                .fillMaxSize()
+                .background(color = Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
 
-                verticalAlignment = Alignment.CenterVertically,
 
-                ) {
-                Checkbox(
-                    checked = rememberMe,
-                    onCheckedChange = { rememeber ->
-                        rememberMe = rememeber
+            // Trigger to show the dialog
+            Button(onClick = { showDialog = true }) {
+                Text("Show AlertDialog")
+            }
+
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false }, // dismiss when clicked outside
+                    confirmButton = {
+                        Button(onClick = {
+                            // Confirm action
+                            showDialog = false
+                        }) {
+                            Text("OK")
+                        }
                     },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = Color.Green,
-                        checkmarkColor = Color.White
-                    )
+                    dismissButton = {
+                        Button(onClick = {
+                            // Cancel action
+                            showDialog = false
+                        }) {
+                            Text("Cancel")
+                        }
+                    },
+                    title = { Text(text = "Alert Title") },
+                    text = { Text("This is an alert dialog message.") }
                 )
-
-                Text(text = "Remember me")
             }
 
-            Text("Forget Password")
-        }
+            Spacer(modifier = Modifier.height(50.dp))
 
-        Button(
-            onClick = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.LightGray,
-                contentColor = Color.Black
-            )
-        ) {
-            Text("Login")
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            "Don't have an account, Sign Up?",
-            style = TextStyle(
-                textAlign = TextAlign.End,
-                fontStyle = FontStyle.Italic
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
-
+            Image(
+                painter = painterResource(R.drawable.img),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(250.dp)
+                    .width(250.dp)
             )
 
+            Spacer(modifier = Modifier.height(50.dp))
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                shape = RoundedCornerShape(12.dp),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email
+                ),
+                prefix = {
+                    Icon(Icons.Default.Email, contentDescription = null)
+                },
+
+                placeholder = {
+                    Text("abc@gmail.com")
+                },
+                value = username,
+                onValueChange = { input ->
+                    username = input
+                }
+            )
+
+
+            Spacer(modifier = Modifier.height(20.dp))
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                shape = RoundedCornerShape(12.dp),
+                visualTransformation =
+                if (passwordVisibility) PasswordVisualTransformation()
+                else VisualTransformation.None,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
+                prefix = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = null,
+
+                        )
+                },
+                suffix = {
+                    Icon(
+                        painter = painterResource(
+                            if (passwordVisibility)
+                                R.drawable.baseline_visibility_24
+                            else R.drawable.baseline_visibility_off_24
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier.clickable {
+                            passwordVisibility = !passwordVisibility
+                        }
+                    )
+                },
+
+                placeholder = {
+                    Text("*******")
+                },
+                value = password,
+                onValueChange = { input ->
+                    password = input
+                }
+            )
+
+
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+
+                    verticalAlignment = Alignment.CenterVertically,
+
+                    ) {
+                    Checkbox(
+                        checked = rememberMe,
+                        onCheckedChange = { rememeber ->
+                            rememberMe = rememeber
+                        },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = Color.Green,
+                            checkmarkColor = Color.White
+                        )
+                    )
+
+                    Text(text = "Remember me")
+                }
+
+                Text("Forget Password")
+            }
+
+            Button(
+                onClick = {
+//                    coroutineScope.launch {
+//                        snackbarHostState.showSnackbar("Hello from snack")
+//                    }
+
+
+
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.LightGray,
+                    contentColor = Color.Black
+                )
+            ) {
+                Text("Login")
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+           Text("Dont't have an account, Signup",
+               modifier = Modifier.clickable{
+                   val intent = Intent(context, RegistrationActivity::class.java)
+                   context.startActivity(intent)
+
+//                   activity.finish()
+
+           })
+
+        }
     }
 }
 
@@ -228,5 +292,5 @@ fun LoginBody(innerPadding: PaddingValues) {
 @Preview
 @Composable
 fun LoginPreviewBody() {
-    LoginBody(innerPadding = PaddingValues(0.dp))
+    LoginBody()
 }

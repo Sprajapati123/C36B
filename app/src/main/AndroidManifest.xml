@@ -13,6 +13,28 @@
         android:theme="@style/Theme.C36B"
         tools:targetApi="31">
         <activity
+            android:name=".DashboardActitivity"
+            android:exported="true"
+            android:label="@string/title_activity_dashboard_actitivity"
+            android:theme="@style/Theme.C36B">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/Theme.C36B">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".RegistrationActivity"
             android:exported="true"
             android:label="@string/title_activity_registration"
