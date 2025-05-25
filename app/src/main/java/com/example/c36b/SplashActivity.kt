@@ -48,9 +48,6 @@ fun SplashBody() {
     val sharedPreferences = context.getSharedPreferences("User",
         Context.MODE_PRIVATE)
 
-
-
-
     val localEmail : String? = sharedPreferences.getString("email","")
     val localPassword : String? = sharedPreferences.getString("password","")
 
