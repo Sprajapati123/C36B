@@ -1,6 +1,7 @@
 package com.example.c36b
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -92,14 +93,23 @@ fun LoginBody(
         mutableStateOf(false)
     }
 
-    var context = LocalContext.current
-    val activity = context as Activity
-
-
-
 
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+
+    var context = LocalContext.current
+    val activity = context as? Activity
+    val sharedPreferences = context.getSharedPreferences("User",
+        Context.MODE_PRIVATE)
+
+
+    val localEmail : String? = sharedPreferences.getString("email","")
+    val localPassword : String? = sharedPreferences.getString("password","")
+
+    username = localEmail.toString()
+    password = localPassword.toString()
+
+    val editor = sharedPreferences.edit()
 
 
     var showDialog by remember { mutableStateOf(false) }
@@ -124,7 +134,8 @@ fun LoginBody(
             if (showDialog) {
                 AlertDialog(
                     onDismissRequest = {
-                        showDialog = false }, // dismiss when clicked outside
+                        showDialog = false
+                    }, // dismiss when clicked outside
                     confirmButton = {
                         Button(onClick = {
                             // Confirm action
@@ -187,8 +198,8 @@ fun LoginBody(
                     .padding(horizontal = 10.dp),
                 shape = RoundedCornerShape(12.dp),
                 visualTransformation =
-                if (passwordVisibility) PasswordVisualTransformation()
-                else VisualTransformation.None,
+                    if (passwordVisibility) PasswordVisualTransformation()
+                    else VisualTransformation.None,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password
                 ),
@@ -255,19 +266,21 @@ fun LoginBody(
 
             Button(
                 onClick = {
-//                    coroutineScope.launch {
-//                        snackbarHostState.showSnackbar("Hello from snack")
-//                    }
 
+                    if(rememberMe){
+                        editor.putString("email",username)
+                        editor.putString("password",password)
+                        editor.apply()
+                    }
 
                     val intent = Intent(context, DashboardActitivity::class.java)
 
-                    intent.putExtra("email",username)
-                    intent.putExtra("password",password)
+                    intent.putExtra("email", username)
+                    intent.putExtra("password", password)
 
                     context.startActivity(intent)
 
-                    activity.finish()
+                    activity?.finish()
 
                 },
                 modifier = Modifier
@@ -283,14 +296,15 @@ fun LoginBody(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-           Text("Dont't have an account, Signup",
-               modifier = Modifier.clickable{
-                   val intent = Intent(context, RegistrationActivity::class.java)
-                   context.startActivity(intent)
+            Text(
+                "Don't have an account, Signup",
+                modifier = Modifier.clickable {
+                    val intent = Intent(context, RegistrationActivity::class.java)
+                    context.startActivity(intent)
 
 //                   activity.finish()
 
-           })
+                })
 
         }
     }
