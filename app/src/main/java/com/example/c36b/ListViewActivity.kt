@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -14,10 +15,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,110 +43,177 @@ class ListViewActivity : ComponentActivity() {
 
 @Composable
 fun ListBody() {
-    val scrollState = rememberScrollState()
 
-    val scrollState2 = rememberScrollState()
-
-
-
-    Scaffold { innerPadding ->
-        Column(
+    Scaffold { padding ->
+        LazyColumn(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
-                .verticalScroll(scrollState)
+                .padding(padding),
+
         ) {
+            item {
+                // list of widgets
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .horizontalScroll(scrollState2)
-
-            ) {
                 Box(
                     modifier = Modifier
-                        .height(100.dp)
-                        .width(100.dp)
-                        .background(color = Color.Red)
+                        .height(300.dp)
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                        .background(color = Color.Black)
                 )
+
                 Box(
                     modifier = Modifier
-                        .height(100.dp)
-                        .width(100.dp)
+                        .height(300.dp)
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                        .background(color = Color.Gray)
+                )
+
+
+
+                Box(
+                    modifier = Modifier
+                        .height(300.dp)
+                        .fillMaxWidth()
+                        .padding(20.dp)
                         .background(color = Color.Magenta)
                 )
+
                 Box(
                     modifier = Modifier
-                        .height(100.dp)
-                        .width(100.dp)
-                        .background(color = Color.Yellow)
-                )
-                Box(
-                    modifier = Modifier
-                        .height(100.dp)
-                        .width(100.dp)
+                        .height(300.dp)
+                        .fillMaxWidth()
+                        .padding(20.dp)
                         .background(color = Color.Green)
                 )
 
                 Box(
                     modifier = Modifier
-                        .height(100.dp)
-                        .width(100.dp)
-                        .background(color = Color.DarkGray)
+                        .height(300.dp)
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                        .background(color = Color.Yellow)
                 )
-                Box(
-                    modifier = Modifier
-                        .height(100.dp)
-                        .width(100.dp)
-                        .background(color = Color.Cyan)
-                )
-
-
             }
-
-            Box(
-                modifier = Modifier
-                    .height(300.dp)
-                    .fillMaxWidth()
-                    .padding(20.dp)
-                    .background(color = Color.Black)
-            )
-
-            Box(
-                modifier = Modifier
-                    .height(300.dp)
-                    .fillMaxWidth()
-                    .padding(20.dp)
-                    .background(color = Color.Gray)
-            )
-
-
-
-            Box(
-                modifier = Modifier
-                    .height(300.dp)
-                    .fillMaxWidth()
-                    .padding(20.dp)
-                    .background(color = Color.Magenta)
-            )
-
-            Box(
-                modifier = Modifier
-                    .height(300.dp)
-                    .fillMaxWidth()
-                    .padding(20.dp)
-                    .background(color = Color.Green)
-            )
-
-            Box(
-                modifier = Modifier
-                    .height(300.dp)
-                    .fillMaxWidth()
-                    .padding(20.dp)
-                    .background(color = Color.Yellow)
-            )
         }
     }
+//    Scaffold { padding ->
+//        LazyColumn(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(padding)
+//        ) {
+////            for(int index = 0;i<1000;i++)
+//            items (1000){index->
+//                Text("$index")
+//            }
+//        }
+//    }
+//    val scrollState = rememberScrollState()
+//
+//    val scrollState2 = rememberScrollState()
+//
+//
+//
+//    Scaffold { innerPadding ->
+//        Column(
+//            modifier = Modifier
+//                .padding(innerPadding)
+//                .fillMaxSize()
+//                .verticalScroll(scrollState)
+//        ) {
+//
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .horizontalScroll(scrollState2)
+//
+//            ) {
+//                Box(
+//                    modifier = Modifier
+//                        .height(100.dp)
+//                        .width(100.dp)
+//                        .background(color = Color.Red)
+//                )
+//                Box(
+//                    modifier = Modifier
+//                        .height(100.dp)
+//                        .width(100.dp)
+//                        .background(color = Color.Magenta)
+//                )
+//                Box(
+//                    modifier = Modifier
+//                        .height(100.dp)
+//                        .width(100.dp)
+//                        .background(color = Color.Yellow)
+//                )
+//                Box(
+//                    modifier = Modifier
+//                        .height(100.dp)
+//                        .width(100.dp)
+//                        .background(color = Color.Green)
+//                )
+//
+//                Box(
+//                    modifier = Modifier
+//                        .height(100.dp)
+//                        .width(100.dp)
+//                        .background(color = Color.DarkGray)
+//                )
+//                Box(
+//                    modifier = Modifier
+//                        .height(100.dp)
+//                        .width(100.dp)
+//                        .background(color = Color.Cyan)
+//                )
+//
+//
+//            }
+//
+//            Box(
+//                modifier = Modifier
+//                    .height(300.dp)
+//                    .fillMaxWidth()
+//                    .padding(20.dp)
+//                    .background(color = Color.Black)
+//            )
+//
+//            Box(
+//                modifier = Modifier
+//                    .height(300.dp)
+//                    .fillMaxWidth()
+//                    .padding(20.dp)
+//                    .background(color = Color.Gray)
+//            )
+//
+//
+//
+//            Box(
+//                modifier = Modifier
+//                    .height(300.dp)
+//                    .fillMaxWidth()
+//                    .padding(20.dp)
+//                    .background(color = Color.Magenta)
+//            )
+//
+//            Box(
+//                modifier = Modifier
+//                    .height(300.dp)
+//                    .fillMaxWidth()
+//                    .padding(20.dp)
+//                    .background(color = Color.Green)
+//            )
+//
+//            Box(
+//                modifier = Modifier
+//                    .height(300.dp)
+//                    .fillMaxWidth()
+//                    .padding(20.dp)
+//                    .background(color = Color.Yellow)
+//            )
+//        }
+//    }
 }
 
 @Preview(showBackground = true)
