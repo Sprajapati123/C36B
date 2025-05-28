@@ -65,13 +65,13 @@ fun NavigationBody() {
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = {
-
-                    }) {
-                        Icon(Icons.Default.KeyboardArrowLeft,contentDescription = null)
-                    }
-                },
+//                navigationIcon = {
+//                    IconButton(onClick = {
+//
+//                    }) {
+//                        Icon(Icons.Default.KeyboardArrowLeft,contentDescription = null)
+//                    }
+//                },
                 title = {
                     Text("Ecommerce")
                 },
