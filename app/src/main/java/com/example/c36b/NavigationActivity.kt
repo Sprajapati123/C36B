@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,9 +28,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.c36b.pages.HomeScreen
+import com.example.c36b.pages.NotificationScreen
+import com.example.c36b.pages.ProfileScreen
+import com.example.c36b.pages.SearchScreen
 import com.example.c36b.ui.theme.C36BTheme
 
 class NavigationActivity : ComponentActivity() {
@@ -93,10 +99,18 @@ fun NavigationBody() {
             }
         },
     ) { innerPadding ->
-        Column(modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize()) {
-
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            when (selectedIndex) {
+                0 -> HomeScreen()
+                1 -> SearchScreen()
+                2 -> NotificationScreen()
+                3 -> ProfileScreen()
+            }
         }
     }
 }
