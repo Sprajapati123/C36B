@@ -1,4 +1,4 @@
-package com.example.c36b.pages
+package com.example.c36b.view.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun ProfileScreen() {
+fun NotificationScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Blue)
+            .background(color = Color.Black)
     ) {
-        Text("This is profile screen")
+        Text("This is notification screen")
     }
 }

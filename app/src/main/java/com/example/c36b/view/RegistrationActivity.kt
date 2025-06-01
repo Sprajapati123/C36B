@@ -1,4 +1,4 @@
-package com.example.c36b
+package com.example.c36b.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -39,7 +39,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import com.example.c36b.ui.theme.C36BTheme
 
 class RegistrationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

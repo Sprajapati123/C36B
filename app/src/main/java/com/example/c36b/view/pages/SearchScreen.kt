@@ -1,4 +1,4 @@
-package com.example.c36b.pages
+package com.example.c36b.view.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun NotificationScreen() {
+fun SearchScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Black)
+            .background(color = Color.Red)
     ) {
-        Text("This is notification screen")
+        Text("This is search screen")
     }
 }

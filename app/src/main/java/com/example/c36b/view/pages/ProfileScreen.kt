@@ -1,4 +1,4 @@
-package com.example.c36b.pages
+package com.example.c36b.view.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun HomeScreen() {
+fun ProfileScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Yellow)
+            .background(color = Color.Blue)
     ) {
-        Text("This is home screen")
+        Text("This is profile screen")
     }
 }

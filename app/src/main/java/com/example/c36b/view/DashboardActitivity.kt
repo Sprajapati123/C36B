@@ -1,4 +1,4 @@
-package com.example.c36b
+package com.example.c36b.view
 
 import android.app.Activity
 import android.os.Bundle
@@ -13,8 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.c36b.ui.theme.C36BTheme
 
 class DashboardActitivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

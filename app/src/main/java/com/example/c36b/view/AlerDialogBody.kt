@@ -1,4 +1,4 @@
-package com.example.c36b
+package com.example.c36b.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog

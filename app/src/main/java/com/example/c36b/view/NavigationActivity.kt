@@ -1,17 +1,15 @@
-package com.example.c36b
+package com.example.c36b.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -32,11 +30,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.c36b.pages.HomeScreen
-import com.example.c36b.pages.NotificationScreen
-import com.example.c36b.pages.ProfileScreen
-import com.example.c36b.pages.SearchScreen
-import com.example.c36b.ui.theme.C36BTheme
+import com.example.c36b.view.pages.HomeScreen
+import com.example.c36b.view.pages.NotificationScreen
+import com.example.c36b.view.pages.ProfileScreen
+import com.example.c36b.view.pages.SearchScreen
 
 class NavigationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
