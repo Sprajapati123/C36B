@@ -39,11 +39,15 @@ class UserRepositoryImpl : UserRepository {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { res ->
                 if (res.isSuccessful) {
-                    callback(true, "Registration successfull",
-                        "${auth.currentUser?.uid}")
+                    callback(
+                        true, "Registration successfull",
+                        "${auth.currentUser?.uid}"
+                    )
                 } else {
-                    callback(false,
-                        "${res.exception?.message}", "")
+                    callback(
+                        false,
+                        "${res.exception?.message}", ""
+                    )
                 }
 
             }
@@ -54,14 +58,14 @@ class UserRepositoryImpl : UserRepository {
         model: UserModel,
         callback: (Boolean, String) -> Unit
     ) {
-       ref.child(userId).setValue(model).addOnCompleteListener {
-           if(it.isSuccessful){
-               callback(true,"User successfully added")
-           }else{
-               callback(true,"${it.exception?.message}")
+        ref.child(userId).setValue(model).addOnCompleteListener {
+            if (it.isSuccessful) {
+                callback(true, "User successfully added")
+            } else {
+                callback(true, "${it.exception?.message}")
 
-           }
-       }
+            }
+        }
     }
 
     override fun forgetPassword(
@@ -80,7 +84,16 @@ class UserRepositoryImpl : UserRepository {
     }
 
     override fun getCurrentUser(): FirebaseUser? {
-        TODO("Not yet implemented")
+        return auth.currentUser
+    }
+
+    override fun logout(callback: (Boolean, String) -> Unit) {
+        try {
+            auth.signOut()
+            callback(true, "Logout successfully")
+        } catch (e: Exception) {
+            callback(true, "${e.message}")
+        }
     }
 
     override fun getUserFromDatabase(
@@ -90,9 +103,6 @@ class UserRepositoryImpl : UserRepository {
         TODO("Not yet implemented")
     }
 
-    override fun logout(callback: (Boolean, String) -> Unit) {
-        TODO("Not yet implemented")
-    }
 
     override fun editProfile(
         userId: String,
@@ -100,10 +110,10 @@ class UserRepositoryImpl : UserRepository {
         callback: (Boolean, String) -> Unit
     ) {
         ref.child(userId).updateChildren(data).addOnCompleteListener {
-            if(it.isSuccessful){
-                callback(true,"Profile updated ")
-            }else{
-                callback(true,"${it.exception?.message}")
+            if (it.isSuccessful) {
+                callback(true, "Profile updated ")
+            } else {
+                callback(true, "${it.exception?.message}")
 
             }
         }
@@ -114,10 +124,10 @@ class UserRepositoryImpl : UserRepository {
         callback: (Boolean, String) -> Unit
     ) {
         ref.child(userId).removeValue().addOnCompleteListener {
-            if(it.isSuccessful){
-                callback(true,"Account deleted successfully")
-            }else{
-                callback(true,"${it.exception?.message}")
+            if (it.isSuccessful) {
+                callback(true, "Account deleted successfully")
+            } else {
+                callback(true, "${it.exception?.message}")
 
             }
         }
