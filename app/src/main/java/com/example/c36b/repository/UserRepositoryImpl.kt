@@ -7,20 +7,28 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 
-class UserRepositoryImpl : UserRepository{
+class UserRepositoryImpl : UserRepository {
 
-    val auth : FirebaseAuth = FirebaseAuth.getInstance()
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    val database : FirebaseDatabase = FirebaseDatabase.getInstance()
+    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
 
-    val ref : DatabaseReference = database.reference.child("users")
+    val ref: DatabaseReference = database.reference.child("users")
 
     override fun login(
         email: String,
         password: String,
         callback: (Boolean, String) -> Unit
     ) {
-        TODO("Not yet implemented")
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { res ->
+                if (res.isSuccessful) {
+                    callback(true, "Login successfull")
+                } else {
+                    callback(false, "${res.exception?.message}")
+                }
+
+            }
     }
 
     override fun register(
@@ -28,7 +36,17 @@ class UserRepositoryImpl : UserRepository{
         password: String,
         callback: (Boolean, String, String) -> Unit
     ) {
-        TODO("Not yet implemented")
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { res ->
+                if (res.isSuccessful) {
+                    callback(true, "Registration successfull",
+                        "${auth.currentUser?.uid}")
+                } else {
+                    callback(false,
+                        "${res.exception?.message}", "")
+                }
+
+            }
     }
 
     override fun addUserToDatabase(
@@ -36,14 +54,29 @@ class UserRepositoryImpl : UserRepository{
         model: UserModel,
         callback: (Boolean, String) -> Unit
     ) {
-        TODO("Not yet implemented")
+       ref.child(userId).setValue(model).addOnCompleteListener {
+           if(it.isSuccessful){
+               callback(true,"User successfully added")
+           }else{
+               callback(true,"${it.exception?.message}")
+
+           }
+       }
     }
 
     override fun forgetPassword(
         email: String,
         callback: (Boolean, String) -> Unit
     ) {
-        TODO("Not yet implemented")
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { res ->
+                if (res.isSuccessful) {
+                    callback(true, "Reset email sent to $email")
+                } else {
+                    callback(false, "${res.exception?.message}")
+                }
+
+            }
     }
 
     override fun getCurrentUser(): FirebaseUser? {
@@ -66,14 +99,28 @@ class UserRepositoryImpl : UserRepository{
         data: MutableMap<String, Any?>,
         callback: (Boolean, String) -> Unit
     ) {
-        TODO("Not yet implemented")
+        ref.child(userId).updateChildren(data).addOnCompleteListener {
+            if(it.isSuccessful){
+                callback(true,"Profile updated ")
+            }else{
+                callback(true,"${it.exception?.message}")
+
+            }
+        }
     }
 
     override fun deleteAccount(
         userId: String,
         callback: (Boolean, String) -> Unit
     ) {
-        TODO("Not yet implemented")
+        ref.child(userId).removeValue().addOnCompleteListener {
+            if(it.isSuccessful){
+                callback(true,"Account deleted successfully")
+            }else{
+                callback(true,"${it.exception?.message}")
+
+            }
+        }
     }
 
 }
