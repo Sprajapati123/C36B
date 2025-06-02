@@ -3,8 +3,11 @@ package com.example.c36b.repository
 import com.example.c36b.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class UserRepositoryImpl : UserRepository {
@@ -100,7 +103,21 @@ class UserRepositoryImpl : UserRepository {
         userId: String,
         callback: (Boolean, String, UserModel?) -> Unit
     ) {
-        TODO("Not yet implemented")
+        ref.child(userId)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        var users = snapshot.getValue(UserModel::class.java)
+                        if (users != null) {
+                            callback(true, "User fetched", users)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback(false, error.message, null)
+                }
+            })
     }
 
 
