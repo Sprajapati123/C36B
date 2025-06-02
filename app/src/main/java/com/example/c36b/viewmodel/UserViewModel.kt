@@ -12,7 +12,7 @@ class UserViewModel(val repo : UserRepository) : ViewModel(){
         email: String, password: String,
         callback: (Boolean, String) -> Unit
     ){
-
+        repo.login(email,password,callback)
     }
 
     //authentication ko function
@@ -20,7 +20,7 @@ class UserViewModel(val repo : UserRepository) : ViewModel(){
         email: String, password: String,
         callback: (Boolean, String, String) -> Unit
     ){
-
+        repo.register(email,password,callback)
     }
 
     //real time database ko function
@@ -28,16 +28,16 @@ class UserViewModel(val repo : UserRepository) : ViewModel(){
         userId: String, model: UserModel,
         callback: (Boolean, String) -> Unit
     ){
-
+        repo.addUserToDatabase(userId,model,callback)
     }
 
     fun forgetPassword(email: String, callback: (Boolean, String) -> Unit){
-
+        repo.forgetPassword(email,callback)
     }
 
 
     fun getCurrentUser(): FirebaseUser?{
-
+        return repo.getCurrentUser()
     }
 
 
@@ -50,7 +50,7 @@ class UserViewModel(val repo : UserRepository) : ViewModel(){
     }
 
     fun logout(callback: (Boolean, String) -> Unit){
-
+        repo.logout(callback)
     }
 
     fun editProfile(
@@ -58,11 +58,11 @@ class UserViewModel(val repo : UserRepository) : ViewModel(){
         data: MutableMap<String, Any?>,
         callback: (Boolean, String) -> Unit
     ){
-
+        repo.editProfile(userId,data,callback)
     }
 
     fun deleteAccount(userId: String, callback: (Boolean, String) -> Unit){
-
+        repo.deleteAccount(userId,callback)
     }
 
 }
