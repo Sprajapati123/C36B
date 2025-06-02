@@ -113,7 +113,6 @@ class UserRepositoryImpl : UserRepository {
                         }
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     callback(false, error.message, null)
                 }
