@@ -1,5 +1,7 @@
 package com.example.c36b.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.c36b.model.UserModel
 import com.example.c36b.repository.UserRepository
@@ -42,11 +44,21 @@ class UserViewModel(val repo : UserRepository) : ViewModel(){
 
 
 
+    private val _users = MutableLiveData<UserModel?>()
+    val users : LiveData<UserModel?> get() = _users
+
     fun getUserFromDatabase(
         userId: String,
         callback: (Boolean, String, UserModel?) -> Unit
     ){
-
+     repo.getUserFromDatabase(userId){
+         success,message,users->
+         if(success){
+             _users.postValue(users)
+         }else{
+             _users.postValue(null)
+         }
+     }
     }
 
     fun logout(callback: (Boolean, String) -> Unit){
