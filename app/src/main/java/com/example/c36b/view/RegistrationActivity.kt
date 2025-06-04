@@ -187,7 +187,8 @@ fun RegBody(innerPaddingValues: PaddingValues) {
                 userViewModel.register(email, password) { success, message, userId ->
                     if (success) {
                         var model = UserModel(
-                            userId, email, firstName, lastname, "985555", selectedOptionText
+                            userId, email, firstName,
+                            lastname, "985555", selectedOptionText
                         )
                         userViewModel.addUserToDatabase(userId, model) { success, message ->
                             if (success) {

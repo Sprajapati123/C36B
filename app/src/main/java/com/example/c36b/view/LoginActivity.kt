@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -52,6 +53,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.c36b.R
+import com.example.c36b.repository.UserRepositoryImpl
+import com.example.c36b.viewmodel.UserViewModel
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +70,9 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun LoginBody(
 ) {
+    val repo = remember { UserRepositoryImpl() }
+    val userViewModel = remember { UserViewModel(repo) }
+
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -85,12 +91,14 @@ fun LoginBody(
 
     var context = LocalContext.current
     val activity = context as? Activity
-    val sharedPreferences = context.getSharedPreferences("User",
-        Context.MODE_PRIVATE)
+    val sharedPreferences = context.getSharedPreferences(
+        "User",
+        Context.MODE_PRIVATE
+    )
 
 
-    val localEmail : String? = sharedPreferences.getString("email","")
-    val localPassword : String? = sharedPreferences.getString("password","")
+    val localEmail: String? = sharedPreferences.getString("email", "")
+    val localPassword: String? = sharedPreferences.getString("password", "")
 
     username = localEmail.toString()
     password = localPassword.toString()
@@ -252,21 +260,30 @@ fun LoginBody(
 
             Button(
                 onClick = {
-
-                    if(rememberMe){
-                        editor.putString("email",username)
-                        editor.putString("password",password)
-                        editor.apply()
+                    userViewModel.login(username, password) { success, message ->
+                        if (success) {
+                            val intent = Intent(context, DashboardActitivity::class.java)
+                            context.startActivity(intent)
+                            activity?.finish()
+                        } else {
+                            Toast.makeText(context, message,Toast.LENGTH_LONG).show()
+                        }
                     }
 
-                    val intent = Intent(context, DashboardActitivity::class.java)
-
-                    intent.putExtra("email", username)
-                    intent.putExtra("password", password)
-
-                    context.startActivity(intent)
-
-                    activity?.finish()
+//                    if(rememberMe){
+//                        editor.putString("email",username)
+//                        editor.putString("password",password)
+//                        editor.apply()
+//                    }
+//
+//                    val intent = Intent(context, DashboardActitivity::class.java)
+//
+//                    intent.putExtra("email", username)
+//                    intent.putExtra("password", password)
+//
+//                    context.startActivity(intent)
+//
+//                    activity?.finish()
 
                 },
                 modifier = Modifier
