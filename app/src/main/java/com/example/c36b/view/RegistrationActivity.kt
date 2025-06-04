@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -55,6 +56,7 @@ class RegistrationActivity : ComponentActivity() {
 @Composable
 fun RegBody(innerPaddingValues: PaddingValues) {
     var firstName by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     var lastname by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
@@ -127,7 +129,7 @@ fun RegBody(innerPaddingValues: PaddingValues) {
                 colors = TextFieldDefaults.colors(
                     disabledIndicatorColor = Color.Gray,
                     disabledContainerColor = Color.White,
-                    ),
+                ),
                 trailingIcon = {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
@@ -154,7 +156,23 @@ fun RegBody(innerPaddingValues: PaddingValues) {
             }
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
+        OutlinedTextField(
+            value = password,
+            onValueChange = {
+                password = it
+            },
+            placeholder = {
+                Text("*******")
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(20.dp))
 
+        Button(onClick = {},
+            modifier = Modifier.fillMaxWidth()) {
+            Text("Register")
+        }
 
     }
 }
