@@ -12,20 +12,16 @@ interface ProductRepository {
         productModel: ProductModel,
         callback: (Boolean, String) -> Unit
     )
-
     fun getProductById(
         productID: String,
         callback: (Boolean, String, ProductModel?) -> Unit
     )
-
     fun getAllProduct(callback: (Boolean, String, List<ProductModel?>) -> Unit)
-
     fun updateProduct(
         productId: String,
-        data: MutableMap<String, Any>?,
+        data: MutableMap<String, Any?>,
         callback: (Boolean, String) -> Unit
     )
-
     fun deleteProduct(
         productId: String, callback: (Boolean, String) -> Unit
     )

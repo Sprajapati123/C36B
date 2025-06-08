@@ -1,8 +1,8 @@
 package com.example.c36b.model
 
 data class ProductModel(
-    val productId :String = "",
-    val productName :String = "",
-    val productDesc :String = "",
-    val productPrice : Double = 0.0,
+    var productId :String = "",
+    var productName :String = "",
+    var productDesc :String = "",
+    var productPrice : Double = 0.0,
 )
