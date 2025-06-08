@@ -73,7 +73,9 @@ fun AddProductBody() {
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Button(onClick = {}) {
+                Button(onClick = {
+
+                }) {
                     Text("Add Product")
                 }
             }
