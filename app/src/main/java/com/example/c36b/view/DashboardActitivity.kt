@@ -3,6 +3,7 @@ package com.example.c36b.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -82,9 +83,11 @@ fun DashboardBody() {
             items(products.value.size) { index ->
                 val data = products.value[index]
 
-                Card(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp)
+                ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text("${data?.productName}")
                         Text("${data?.productPrice}")
@@ -93,18 +96,32 @@ fun DashboardBody() {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End
-                            ) {
+                        ) {
                             IconButton(
                                 onClick = {},
                                 colors = IconButtonDefaults.iconButtonColors(
                                     contentColor = Color.Gray
                                 )
-                                ) {
+                            ) {
                                 Icon(Icons.Default.Edit, contentDescription = null)
                             }
-                            IconButton(onClick = {}, colors = IconButtonDefaults.iconButtonColors(
-                                contentColor = Color.Red
-                            )) {
+                            IconButton(
+                                onClick = {
+                                    viewModel.deleteProduct(data?.productId.toString()) { success, message ->
+                                        if (success) {
+                                            Toast.makeText(context, message, Toast.LENGTH_LONG)
+                                                .show()
+                                        } else {
+                                            Toast.makeText(context, message, Toast.LENGTH_LONG)
+                                                .show()
+
+                                        }
+                                    }
+
+                                }, colors = IconButtonDefaults.iconButtonColors(
+                                    contentColor = Color.Red
+                                )
+                            ) {
                                 Icon(Icons.Default.Delete, contentDescription = null)
                             }
                         }
