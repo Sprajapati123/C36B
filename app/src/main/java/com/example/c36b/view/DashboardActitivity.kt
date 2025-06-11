@@ -98,7 +98,11 @@ fun DashboardBody() {
                             horizontalArrangement = Arrangement.End
                         ) {
                             IconButton(
-                                onClick = {},
+                                onClick = {
+                                    val intent = Intent(context, UpdateProductActivity::class.java)
+                                    intent.putExtra("productId",data?.productId)
+                                    context.startActivity(intent)
+                                },
                                 colors = IconButtonDefaults.iconButtonColors(
                                     contentColor = Color.Gray
                                 )
